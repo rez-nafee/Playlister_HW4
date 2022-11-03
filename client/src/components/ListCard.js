@@ -47,6 +47,7 @@ function ListCard(props) {
         setEditActive(newActive);
     }
 
+
     async function handleDeleteList(event, id) {
         event.stopPropagation();
         let _id = event.target.id;
@@ -73,31 +74,37 @@ function ListCard(props) {
     if (store.isListNameEditActive) {
         cardStatus = true;
     }
+    
     let cardElement =
         <ListItem
             id={idNamePair._id}
+            className = {'list-card ' + selectClass}
             key={idNamePair._id}
             sx={{ marginTop: '15px', display: 'flex', p: 1 }}
             style={{ width: '100%', fontSize: '48pt' }}
-            button
             onClick={(event) => {
                 handleLoadList(event, idNamePair._id)
             }}
         >
-            <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box>
-            <Box sx={{ p: 1 }}>
-                <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                    <EditIcon style={{fontSize:'48pt'}} />
-                </IconButton>
+            <Box 
+            sx={{ p: 1, flexGrow: 1 }}
+            id={"list-card-text-" + idNamePair._id}
+            >   
+                {idNamePair.name}
             </Box>
-            <Box sx={{ p: 1 }}>
+            <Box sx={{ p: 1 }} className = "card-buttons">
+                <IconButton onClick={handleToggleEdit} aria-label='edit'>
+                    <EditIcon style={{fontSize:'48pt'}} className='playlister-button'/>
+                </IconButton>
                 <IconButton onClick={(event) => {
                         handleDeleteList(event, idNamePair._id)
-                    }} aria-label='delete'>
-                    <DeleteIcon style={{fontSize:'48pt'}} />
+                    }} aria-label='delete' >
+                    <DeleteIcon style={{fontSize:'48pt'}} className='playlister-button'/>
                 </IconButton>
             </Box>
         </ListItem>
+
+console.log(cardElement)
 
     if (editActive) {
         cardElement =

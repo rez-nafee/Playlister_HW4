@@ -11,11 +11,12 @@ import { GlobalStoreContext } from '../store/index.js'
     happens when we are on the proper route.
     
     @author McKilla Gorilla
+    @author Rezvan Nafee
 */
 function WorkspaceScreen() {
     const { store } = useContext(GlobalStoreContext);
     store.history = useHistory();
-    
+
     let modalJSX = "";
     if (store.isEditSongModalOpen()) {
         modalJSX = <MUIEditSongModal />;
@@ -23,11 +24,17 @@ function WorkspaceScreen() {
     else if (store.isRemoveSongModalOpen()) {
         modalJSX = <MUIRemoveSongModal />;
     }
+
+    var songCard = ""
+    if (store.currentList){
+        console.log(store.currentList.newList)
+    }
+
     return (
         <Box>
         <List 
             id="playlist-cards" 
-            sx={{ width: '100%', bgcolor: 'background.paper' }}
+            sx={{ width: '100%'}}
         >
             {
                 store.currentList.songs.map((song, index) => (
@@ -40,7 +47,7 @@ function WorkspaceScreen() {
                 ))  
             }
          </List>            
-         { modalJSX }
+         {modalJSX}
          </Box>
     )
 }

@@ -61,12 +61,12 @@ body {
   border-width: 2px;
   border-style: solid;
   border-radius: 10px;
-  padding-left: 10%;
   padding-top: 5%;
   padding-bottom: 5%;
   height:70%;
-  text-align: center;
-  vertical-align: center;
+  display: flex;
+  justify-content: center;
+  
 }
 
 #edit-toolbar {
@@ -189,6 +189,37 @@ body {
 .list-card-button {
   float: right;
   transform: scale(2);
+}
+
+.playlister-button, .playlister-button-disabled {
+  font-size:36pt;
+  border-width: 0px;
+  color: black;
+  cursor: pointer;
+  border-width: 1px;
+  border-color: black;
+  border-style: solid;
+  border-radius: 5px;
+  opacity: 100%;
+  background-color: white;
+}
+
+.card-buttons{
+  display: inline-flex;
+  float: right;
+}
+
+#playlister-statusbar {
+  position: absolute;
+  left: 0%;
+  top: 90%;
+  width: 100%;
+  height: 10%;
+  background-color: lightsalmon;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36pt;
 }
 
 #workspace-home,

@@ -33,10 +33,12 @@ createPlaylist = (req, res) => {
                 playlist
                     .save()
                     .then(() => {
+                        // Add the playlists to the User list of playlists
                         return res.status(201).json({
                             playlist: playlist
                         })
                     })
+                    // If it didn't work gg bozo
                     .catch(error => {
                         return res.status(400).json({
                             errorMessage: 'Playlist Not Created!'

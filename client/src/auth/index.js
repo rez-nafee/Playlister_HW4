@@ -56,6 +56,7 @@ function AuthContextProvider(props) {
         }
     }
 
+    // Gets the user that is currently logged into the application 
     auth.getLoggedIn = async function () {
         const response = await api.getLoggedIn();
         if (response.status === 200) {
@@ -69,19 +70,22 @@ function AuthContextProvider(props) {
         }
     }
 
+    // Function for registering a user and updating our database. Once updated, logged the user into the application. 
     auth.registerUser = async function(firstName, lastName, email, password, passwordVerify) {
         const response = await api.registerUser(firstName, lastName, email, password, passwordVerify);      
         if (response.status === 200) {
+            // Success! Login the user into the application in order for them to use. 
+            auth.loginUser(email,password)
             authReducer({
                 type: AuthActionType.REGISTER_USER,
                 payload: {
                     user: response.data.user
                 }
             })
-            history.push("/login");
         }
     }
 
+    // Function for logging in the user to the application so they can begin working in the application. 
     auth.loginUser = async function(email, password) {
         const response = await api.loginUser(email, password);
         if (response.status === 200) {
@@ -91,10 +95,12 @@ function AuthContextProvider(props) {
                     user: response.data.user
                 }
             })
+            // Sent them back to the homescreen but since we have a user logged in, it'll take them to Workspace!
             history.push("/");
         }
     }
 
+    // Function for logging the user out the application. 
     auth.logoutUser = async function() {
         const response = await api.logoutUser();
         if (response.status === 200) {
@@ -106,6 +112,7 @@ function AuthContextProvider(props) {
         }
     }
 
+    // Function for getting the initials of the user. 
     auth.getUserInitials = function() {
         let initials = "";
         if (auth.user) {

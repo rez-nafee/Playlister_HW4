@@ -23,9 +23,9 @@ const HomeScreen = () => {
         store.createNewList();
     }
     let listCard = "";
-    if (store) {
+    if (store && store.idNamePairs.length > 0) {
         listCard = 
-            <List sx={{ width: '90%', left: '5%', bgcolor: 'background.paper' }}>
+            <List sx={{ width: '90%', left: '5%'}}>
             {
                 store.idNamePairs.map((pair) => (
                     <ListCard
@@ -37,6 +37,7 @@ const HomeScreen = () => {
             }
             </List>;
     }
+    console.log(store.idNamePairs)
     return (
         <div id="playlist-selector">
             <div id="list-selector-heading">
@@ -44,17 +45,22 @@ const HomeScreen = () => {
                 color="primary" 
                 aria-label="add"
                 id="add-list-button"
+                size = "small"
                 onClick={handleCreateNewList}
             >
                 <AddIcon />
             </Fab>
-                <Typography variant="h2">Your Lists</Typography>
+                <Typography 
+                variant="h2"
+                sx = {{color : 'white'}}
+                >
+                    Your Lists
+                </Typography>
             </div>
             <div id="list-selector-list">
                 {
                     listCard
                 }
-                <MUIDeleteModal />
             </div>
         </div>)
 }
