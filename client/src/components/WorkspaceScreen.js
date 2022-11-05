@@ -31,7 +31,8 @@ function WorkspaceScreen() {
     }
 
     return (
-        <Box>
+        <Box 
+        sx= {{height: '85%', overflow: 'scroll'}}>
         <List 
             id="playlist-cards" 
             sx={{ width: '100%'}}

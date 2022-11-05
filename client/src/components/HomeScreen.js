@@ -40,19 +40,19 @@ const HomeScreen = () => {
     console.log(store.idNamePairs)
     return (
         <div id="playlist-selector">
-            <div id="list-selector-heading">
+            <div id="playlist-selector-heading">
             <Fab 
                 color="primary" 
                 aria-label="add"
                 id="add-list-button"
-                size = "small"
+                size = "large"
                 onClick={handleCreateNewList}
             >
                 <AddIcon />
             </Fab>
                 <Typography 
                 variant="h2"
-                sx = {{color : 'white'}}
+                sx = {{color : 'black', size: "48px"}}
                 >
                     Your Lists
                 </Typography>

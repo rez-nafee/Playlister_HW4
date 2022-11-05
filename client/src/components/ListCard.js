@@ -81,7 +81,7 @@ function ListCard(props) {
             className = {'list-card ' + selectClass}
             key={idNamePair._id}
             sx={{ marginTop: '15px', display: 'flex', p: 1 }}
-            style={{ width: '100%', fontSize: '48pt' }}
+            style={{ width: '100%', fontSize: '32pt' }}
             onClick={(event) => {
                 handleLoadList(event, idNamePair._id)
             }}

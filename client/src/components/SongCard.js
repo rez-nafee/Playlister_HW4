@@ -69,6 +69,7 @@ function SongCard(props) {
                 id={"remove-song-" + index}
                 className="list-card-button"
                 value={"\u2715"}
+                sx ={{fontSize: "18pt", width: "50%"}}
                 onClick={handleRemoveSong}
             />
         </div>
