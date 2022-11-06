@@ -12,6 +12,7 @@ import Link from '@mui/material/Link';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import MUIAccountError from './MUIAccountError';
 
 export default function RegisterScreen() {
     const { auth } = useContext(AuthContext);
@@ -120,6 +121,7 @@ export default function RegisterScreen() {
                         </Grid>
                     </Box>
                 </Box>
+                <MUIAccountError></MUIAccountError>
             </Container>
     );
 }

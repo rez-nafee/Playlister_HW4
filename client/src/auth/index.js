@@ -10,13 +10,16 @@ export const AuthActionType = {
     GET_LOGGED_IN: "GET_LOGGED_IN",
     LOGIN_USER: "LOGIN_USER",
     LOGOUT_USER: "LOGOUT_USER",
-    REGISTER_USER: "REGISTER_USER"
+    REGISTER_USER: "REGISTER_USER",
+    ACCOUNT_ERROR: "ACCOUNT_ERROR",
+    ACCOUNT_ERROR_CLEAR: "ACCOUNT_ERROR_CLEAR"
 }
 
 function AuthContextProvider(props) {
     const [auth, setAuth] = useState({
         user: null,
-        loggedIn: false
+        loggedIn: false,
+        errorMessage: null, 
     });
     const history = useHistory();
 
@@ -30,25 +33,43 @@ function AuthContextProvider(props) {
             case AuthActionType.GET_LOGGED_IN: {
                 return setAuth({
                     user: payload.user,
-                    loggedIn: payload.loggedIn
+                    loggedIn: payload.loggedIn,
+                    errorMessage: null
                 });
             }
             case AuthActionType.LOGIN_USER: {
                 return setAuth({
                     user: payload.user,
-                    loggedIn: true
+                    loggedIn: true,
+                    errorMessage: null
                 })
             }
             case AuthActionType.LOGOUT_USER: {
                 return setAuth({
                     user: null,
-                    loggedIn: false
+                    loggedIn: false,
+                    errorMessage: null
                 })
             }
             case AuthActionType.REGISTER_USER: {
                 return setAuth({
                     user: payload.user,
-                    loggedIn: true
+                    loggedIn: true,
+                    errorMessage: null
+                })
+            }
+            case AuthActionType.ACCOUNT_ERROR:{
+                return setAuth({
+                    user: auth.user,
+                    loggedIn: auth.loggedIn,
+                    errorMessage: payload
+                })
+            }
+            case AuthActionType.ACCOUNT_ERROR_CLEAR:{
+                return setAuth({
+                    user: auth.user,
+                    loggedIn: auth.loggedIn,
+                    errorMessage: null
                 })
             }
             default:
@@ -72,32 +93,52 @@ function AuthContextProvider(props) {
 
     // Function for registering a user and updating our database. Once updated, logged the user into the application. 
     auth.registerUser = async function(firstName, lastName, email, password, passwordVerify) {
-        const response = await api.registerUser(firstName, lastName, email, password, passwordVerify);      
-        if (response.status === 200) {
-            // Success! Login the user into the application in order for them to use. 
-            auth.loginUser(email,password)
-            authReducer({
-                type: AuthActionType.REGISTER_USER,
-                payload: {
-                    user: response.data.user
-                }
-            })
-        }
+        const response = await api.registerUser(firstName, lastName, email, password, passwordVerify).then(function (res){
+            if (res.status === 200) {
+                // Success! Login the user into the application in order for them to use. 
+                auth.loginUser(email,password)
+                authReducer({
+                    type: AuthActionType.REGISTER_USER,
+                    payload: {
+                        user: res.data.user
+                    }
+                })
+            }
+        }).catch(function (error){
+            if (error.response) {
+                // Get the error message that was sent back by the server
+                var errorMessage = error.response.data.errorMessage
+                authReducer({
+                    type: AuthActionType.ACCOUNT_ERROR,
+                    payload: errorMessage
+                })
+              } 
+        });    
     }
 
     // Function for logging in the user to the application so they can begin working in the application. 
     auth.loginUser = async function(email, password) {
-        const response = await api.loginUser(email, password);
-        if (response.status === 200) {
-            authReducer({
-                type: AuthActionType.LOGIN_USER,
-                payload: {
-                    user: response.data.user
-                }
-            })
-            // Sent them back to the homescreen but since we have a user logged in, it'll take them to Workspace!
-            history.push("/");
-        }
+        const response = await api.loginUser(email, password).then(function (res){
+            if (res.status === 200) {
+                authReducer({
+                    type: AuthActionType.LOGIN_USER,
+                    payload: {
+                        user: res.data.user
+                    }
+                })
+                // Sent them back to the homescreen but since we have a user logged in, it'll take them to Workspace!
+                history.push("/");
+            }
+        }).catch(function (error){
+            if (error.response) {
+                // Get the error message that was sent back by the server
+                var errorMessage = error.response.data.errorMessage
+                authReducer({
+                    type: AuthActionType.ACCOUNT_ERROR,
+                    payload: errorMessage
+                })
+              } 
+        });
     }
 
     // Function for logging the user out the application. 
@@ -110,6 +151,13 @@ function AuthContextProvider(props) {
             })
             history.push("/");
         }
+    }
+
+    auth.closeError = function(){
+        authReducer( {
+            type: AuthActionType.ACCOUNT_ERROR_CLEAR,
+            payload: null
+        })
     }
 
     // Function for getting the initials of the user. 
