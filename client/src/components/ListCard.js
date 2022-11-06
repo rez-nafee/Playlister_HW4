@@ -58,7 +58,7 @@ function ListCard(props) {
     function handleKeyPress(event) {
         if (event.code === "Enter") {
             let id = event.target.id.substring("list-".length);
-            store.changeListName(id, text);
+            store.changeListName(id, text ? text : idNamePair.name);
             toggleEdit();
         }
     }
@@ -74,6 +74,7 @@ function ListCard(props) {
     if (store.isListNameEditActive) {
         cardStatus = true;
     }
+
     
     let cardElement =
         <Box
