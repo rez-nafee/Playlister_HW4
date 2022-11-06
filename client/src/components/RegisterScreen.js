@@ -29,14 +29,15 @@ export default function RegisterScreen() {
     };
 
     return (
-            <Container component="main" maxWidth="xs" maxHeight = '10%'>
+            <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 8,
+                        position: 'relative',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
+                        height: '70%'
                     }}
                 >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -45,7 +46,7 @@ export default function RegisterScreen() {
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3}}>
+                    <Box component="form" noValidate onSubmit={handleSubmit}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -114,11 +115,11 @@ export default function RegisterScreen() {
                                 <Link href="/login/" variant="body2">
                                     Already have an account? Sign in
                                 </Link>
+                                <Copyright sx={{ mt: 5 }} />
                             </Grid>
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 5 }} />
             </Container>
     );
 }
