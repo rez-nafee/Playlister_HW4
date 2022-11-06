@@ -6,6 +6,7 @@ import MUIDeleteModal from './MUIDeleteModal'
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab'
 import List from '@mui/material/List';
+import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 /*
     This React component lists all the top5 lists in the UI.
@@ -24,45 +25,47 @@ const HomeScreen = () => {
     }
     let listCard = "";
     if (store && store.idNamePairs.length > 0) {
-        listCard = 
-            <List sx={{ width: '90%', left: '5%'}}>
-            {
-                store.idNamePairs.map((pair) => (
+        listCard =
+                // Sorts the List by their name and then create the list card elements for the user.
+                store.idNamePairs.sort((a,b) => a.name.localeCompare(b.name, undefined , {numeric: true, sensitivity: 'base'})).map((pair) => 
+                (
                     <ListCard
                         key={pair._id}
                         idNamePair={pair}
                         selected={false}
                     />
                 ))
-            }
-            </List>;
     }
+
     console.log(store.idNamePairs)
     return (
-        <div id="playlist-selector">
-            <div id="playlist-selector-heading">
-            <Fab 
-                color="primary" 
-                aria-label="add"
-                id="add-list-button"
-                size = "large"
-                onClick={handleCreateNewList}
-            >
-                <AddIcon />
-            </Fab>
-                <Typography 
-                variant="h2"
-                sx = {{color : 'black', size: "48px"}}
-                >
-                    Your Lists
-                </Typography>
+        <>
+            <div id="playlist-selector">
+                <div id="playlist-selector-heading">
+                    <Fab 
+                        color="primary" 
+                        aria-label="add"
+                        id="add-list-button"
+                        size = "medium"
+                        onClick={handleCreateNewList}
+                    >
+                        <AddIcon />
+                    </Fab>
+                    <Typography 
+                    variant = "h3"
+                    sx = {{color : 'black', size: "32px"}}
+                    >
+                        Your Lists
+                    </Typography>
+                </div>
             </div>
             <div id="list-selector-list">
                 {
                     listCard
                 }
             </div>
-        </div>)
+        </>
+        )
 }
 
 export default HomeScreen;

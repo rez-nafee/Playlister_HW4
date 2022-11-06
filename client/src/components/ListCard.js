@@ -76,9 +76,9 @@ function ListCard(props) {
     }
     
     let cardElement =
-        <ListItem
+        <Box
             id={idNamePair._id}
-            className = {'list-card ' + selectClass}
+            className = {'list-box list-card ' + selectClass + " "}
             key={idNamePair._id}
             sx={{ marginTop: '15px', display: 'flex', p: 1 }}
             style={{ width: '100%', fontSize: '32pt' }}
@@ -102,7 +102,7 @@ function ListCard(props) {
                     <DeleteIcon style={{fontSize:'48pt'}} className='playlister-button'/>
                 </IconButton>
             </Box>
-        </ListItem>
+        </Box>
 
 console.log(cardElement)
 
