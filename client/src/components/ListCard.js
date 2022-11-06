@@ -50,9 +50,9 @@ function ListCard(props) {
 
     async function handleDeleteList(event, id) {
         event.stopPropagation();
-        let _id = event.target.id;
-        _id = ("" + _id).substring("delete-list-".length);
-        store.markListForDeletion(id);
+        console.log("List to be deleted: ", idNamePair._id)
+        // Grab the lists id that is being marked for deletion by the user
+        store.markListForDeletion(idNamePair._id);
     }
 
     function handleKeyPress(event) {
@@ -103,8 +103,6 @@ function ListCard(props) {
                 </IconButton>
             </Box>
         </Box>
-
-console.log(cardElement)
 
     if (editActive) {
         cardElement =

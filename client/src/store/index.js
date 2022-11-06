@@ -307,19 +307,25 @@ function GlobalStoreContextProvider(props) {
     // OF A LIST, WHICH INCLUDES USING A VERIFICATION MODAL. THE
     // FUNCTIONS ARE markListForDeletion, deleteList, deleteMarkedList,
     // showDeleteListModal, and hideDeleteListModal
+
+    // Function to mark the playlist that is set to be deleted
     store.markListForDeletion = function (id) {
         async function getListToDelete(id) {
             let response = await api.getPlaylistById(id);
             if (response.data.success) {
                 let playlist = response.data.playlist;
+                // Update our state with the list that was marked for deletion 
                 storeReducer({
                     type: GlobalStoreActionType.MARK_LIST_FOR_DELETION,
-                    payload: {id: id, playlist: playlist}
+                    payload: {id: playlist._id, playlist: playlist}
                 });
+                // Show the modal that is going to confirm with the user to delete the list
             }
         }
         getListToDelete(id);
     }
+
+    // Function that removes the playlist from user's list of playlists 
     store.deleteList = function (id) {
         async function processDelete(id) {
             let response = await api.deletePlaylistById(id);
@@ -337,30 +343,39 @@ function GlobalStoreContextProvider(props) {
     // THIS FUNCTION SHOWS THE MODAL FOR PROMPTING THE USER
     // TO SEE IF THEY REALLY WANT TO DELETE THE LIST
 
+    // Shows the edit song modal to collect that changes that need to be made
     store.showEditSongModal = (songIndex, songToEdit) => {
         storeReducer({
             type: GlobalStoreActionType.EDIT_SONG,
             payload: {currentSongIndex: songIndex, currentSong: songToEdit}
         });        
     }
+
+    // Show the remove song modal to verify that they want to remove the song from the playlist
     store.showRemoveSongModal = (songIndex, songToRemove) => {
         storeReducer({
             type: GlobalStoreActionType.REMOVE_SONG,
             payload: {currentSongIndex: songIndex, currentSong: songToRemove}
         });        
     }
+
+    // Hides all the modals
     store.hideModals = () => {
         storeReducer({
             type: GlobalStoreActionType.HIDE_MODALS,
             payload: {}
         });    
     }
+
+    // Checks if the delete list modal is open
     store.isDeleteListModalOpen = () => {
         return store.currentModal === CurrentModal.DELETE_LIST;
     }
+    // Checks if the edit song modal is open
     store.isEditSongModalOpen = () => {
         return store.currentModal === CurrentModal.EDIT_SONG;
     }
+    // Checks if the remove song modal is open
     store.isRemoveSongModalOpen = () => {
         return store.currentModal === CurrentModal.REMOVE_SONG;
     }
@@ -521,6 +536,18 @@ function GlobalStoreContextProvider(props) {
             type: GlobalStoreActionType.SET_LIST_NAME_EDIT_ACTIVE,
             payload: null
         });
+    }
+
+    store.logoutApp = function() {
+         // Clear the transaction stack
+         tps.clearAllTransactions()
+         // Update out state
+         storeReducer({
+             type: GlobalStoreActionType.CLOSE_CURRENT_LIST,
+             payload: {}
+         });
+        // Push the user back to the home screen after closing the list 
+        history.push("/")
     }
 
     return (

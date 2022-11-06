@@ -64,6 +64,7 @@ const HomeScreen = () => {
                     listCard
                 }
             </div>
+            <MUIDeleteModal></MUIDeleteModal>
         </>
         )
 }
