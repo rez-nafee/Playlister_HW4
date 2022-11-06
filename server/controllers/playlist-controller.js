@@ -6,6 +6,7 @@ const User = require('../models/user-model');
     functions for each endpoint.
     
     @author McKilla Gorilla
+    @author Rezvan Nafee
 */
 createPlaylist = (req, res) => {
     const body = req.body;
@@ -47,6 +48,7 @@ createPlaylist = (req, res) => {
             });
     })
 }
+
 deletePlaylist = async (req, res) => {
     console.log("delete Playlist with id: " + JSON.stringify(req.params.id));
     console.log("delete " + req.params.id);
@@ -80,6 +82,7 @@ deletePlaylist = async (req, res) => {
         asyncFindUser(playlist);
     })
 }
+
 getPlaylistById = async (req, res) => {
     console.log("Find Playlist with id: " + JSON.stringify(req.params.id));
 
@@ -107,6 +110,7 @@ getPlaylistById = async (req, res) => {
         asyncFindUser(list);
     }).catch(err => console.log(err))
 }
+
 getPlaylistPairs = async (req, res) => {
     console.log("getPlaylistPairs");
     await User.findOne({ _id: req.userId }, (err, user) => {
@@ -119,13 +123,15 @@ getPlaylistPairs = async (req, res) => {
                     return res.status(400).json({ success: false, error: err })
                 }
                 if (!playlists) {
-                    console.log("!playlists.length");
+                    console.log(playlists.length);
                     return res
                         .status(404)
                         .json({ success: false, error: 'Playlists not found' })
                 }
                 else {
                     console.log("Send the Playlist pairs");
+                    user.playlists = playlists
+                    user.save()
                     // PUT ALL THE LISTS INTO ID, NAME PAIRS
                     let pairs = [];
                     for (let key in playlists) {
@@ -143,6 +149,7 @@ getPlaylistPairs = async (req, res) => {
         asyncFindList(user.email);
     }).catch(err => console.log(err))
 }
+
 getPlaylists = async (req, res) => {
     await Playlist.find({}, (err, playlists) => {
         if (err) {
@@ -156,6 +163,7 @@ getPlaylists = async (req, res) => {
         return res.status(200).json({ success: true, data: playlists })
     }).catch(err => console.log(err))
 }
+
 updatePlaylist = async (req, res) => {
     const body = req.body
     console.log("updatePlaylist: " + JSON.stringify(body));
@@ -215,6 +223,7 @@ updatePlaylist = async (req, res) => {
         asyncFindUser(playlist);
     })
 }
+
 module.exports = {
     createPlaylist,
     deletePlaylist,
