@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState} from 'react'
 import { GlobalStoreContext } from '../store'
 
 function SongCard(props) {
@@ -49,6 +49,7 @@ function SongCard(props) {
     if (store.currentModal === 'EDIT_SONG' || store.currentModal === 'REMOVE_SONG'){
         disableRemove = true
     }
+
 
     let cardClass = "list-card unselected-list-card";
     return (

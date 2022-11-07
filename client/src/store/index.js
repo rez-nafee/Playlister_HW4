@@ -400,6 +400,8 @@ function GlobalStoreContextProvider(props) {
                 }
             }
         }
+        // Clear the transaction stack just in case we have any left over transactions
+        tps.clearAllTransactions()
         asyncSetCurrentList(id);
     }
 
