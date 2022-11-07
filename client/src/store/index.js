@@ -479,8 +479,10 @@ function GlobalStoreContextProvider(props) {
         tps.addTransaction(transaction);
     }    
     store.addMoveSongTransaction = function (start, end) {
-        let transaction = new MoveSong_Transaction(store, start, end);
-        tps.addTransaction(transaction);
+        if (!start == end){
+            let transaction = new MoveSong_Transaction(store, start, end);
+            tps.addTransaction(transaction);
+        }
     }
     // THIS FUNCTION ADDS A RemoveSong_Transaction TO THE TRANSACTION STACK
     store.addRemoveSongTransaction = () => {
