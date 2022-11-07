@@ -44,6 +44,12 @@ function SongCard(props) {
         }
     }
 
+    let disableRemove = false
+
+    if (store.currentModal === 'EDIT_SONG' || store.currentModal === 'REMOVE_SONG'){
+        disableRemove = true
+    }
+
     let cardClass = "list-card unselected-list-card";
     return (
         <div
@@ -70,6 +76,7 @@ function SongCard(props) {
             <input
                 type="button"
                 id={"remove-song-" + index}
+                disabled = {disableRemove}
                 className="list-card-button"
                 value={"\u2715"}
                 onClick={handleRemoveSong}
