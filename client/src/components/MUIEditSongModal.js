@@ -23,6 +23,8 @@ export default function MUIEditSongModal() {
         store.hideModals();
     }
 
+    console.log(store.currentModal)
+
     function handleUpdateTitle(event) {
         setTitle(event.target.value);
     }
@@ -36,7 +38,7 @@ export default function MUIEditSongModal() {
     }
 
     return (
-        <Modal open={store.currentModal}>
+        <Modal open={store.currentModal === 'EDIT_SONG'}>
             <Box>
             <div
                 id="edit-song-modal"
