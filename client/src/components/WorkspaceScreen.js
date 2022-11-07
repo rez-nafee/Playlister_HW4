@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import React, { useContext, useState, useCallback, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import SongCard from './SongCard.js'
 import MUIEditSongModal from './MUIEditSongModal'
@@ -29,6 +29,26 @@ function WorkspaceScreen() {
     if (store.currentList){
         console.log(store.currentList.newList)
     }
+
+    const handleKeyPress = useCallback((event) => {
+        if(event.key.toString().toLowerCase() === 'z' && (event.ctrlKey || event.metaKey)){
+            store.undo()
+        }
+        if(event.key.toString().toLowerCase() === 'y' && (event.ctrlKey || event.metaKey)){
+            store.redo()
+        }
+    }) 
+
+    useEffect(() => {
+        // Add the event listener to the document
+        document.addEventListener('keydown', handleKeyPress)
+
+        // Remove the event listener
+        return () => {
+            document.removeEventListener('keydown', handleKeyPress)
+        }
+    }, [handleKeyPress])
+
 
      // Check if we currently have a current list
      if(!store.currentList){
