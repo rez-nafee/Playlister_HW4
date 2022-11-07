@@ -30,6 +30,12 @@ function WorkspaceScreen() {
         console.log(store.currentList.newList)
     }
 
+     // Check if we currently have a current list
+     if(!store.currentList){
+        store.history.push("/")
+        return <></>
+    }
+
     return (
         <Box 
         sx= {{height: '85%', overflow: 'scroll'}}>
