@@ -37,6 +37,22 @@ const HomeScreen = () => {
                 ))
     }
 
+    let disableBtns = false
+
+    if (store.listNameActive || store.currentModal === 'DELETE_LIST'){
+        disableBtns = true
+    }
+
+    console.log(disableBtns)
+    
+    let style = {}
+    if(disableBtns){
+        style = {
+            bgcolor: 'grey',
+            cursor: 'not-allowed',
+        }
+    }
+
     console.log(store.idNamePairs)
     return (
         <>
@@ -48,6 +64,8 @@ const HomeScreen = () => {
                         id="add-list-button"
                         size = "medium"
                         onClick={handleCreateNewList}
+                        sx={style}
+                        disabled={disableBtns}
                     >
                         <AddIcon />
                     </Fab>

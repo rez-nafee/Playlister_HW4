@@ -75,7 +75,22 @@ function ListCard(props) {
         cardStatus = true;
     }
 
+    let disableBtns = false
+
+    if (store.listNameActive || store.currentModal === 'DELETE_LIST'){
+        disableBtns = true
+    }
+
+    console.log(disableBtns)
     
+    let style = {}
+    if(disableBtns){
+        style = {
+            bgcolor: 'grey',
+            cursor: 'not-allowed',
+        }
+    }
+
     let cardElement =
         <Box
             id={idNamePair._id}
@@ -83,24 +98,24 @@ function ListCard(props) {
             key={idNamePair._id}
             sx={{ marginTop: '15px', display: 'flex', p: 1 }}
             style={{ width: '100%', fontSize: '32pt' }}
-            onClick={(event) => {
-                handleLoadList(event, idNamePair._id)
-            }}
         >
             <Box 
             sx={{ p: 1, flexGrow: 1 }}
             id={"list-card-text-" + idNamePair._id}
+            onClick={(event) => {
+                handleLoadList(event, idNamePair._id)
+            }}
             >   
                 {idNamePair.name}
             </Box>
             <Box sx={{ p: 1 }} className = "card-buttons">
-                <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                    <EditIcon style={{fontSize:'48pt'}} className='playlister-button'/>
+                <IconButton onClick={handleToggleEdit} aria-label='edit' disabled={disableBtns}>
+                    <EditIcon style={{fontSize:'48pt'}} className='playlister-button' sx={style}/>
                 </IconButton>
                 <IconButton onClick={(event) => {
                         handleDeleteList(event, idNamePair._id)
-                    }} aria-label='delete' >
-                    <DeleteIcon style={{fontSize:'48pt'}} className='playlister-button'/>
+                    }} aria-label='delete' disabled={disableBtns} sx={{}}>
+                    <DeleteIcon style={{fontSize:'48pt'}} className='playlister-button' sx={style}/>
                 </IconButton>
             </Box>
         </Box>
