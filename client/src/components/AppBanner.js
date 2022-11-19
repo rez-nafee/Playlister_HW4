@@ -13,6 +13,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import "@fontsource/pacifico";
 
 export default function AppBanner() {
     const { auth } = useContext(AuthContext);
@@ -51,8 +52,8 @@ export default function AppBanner() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <Link to='/login/'><MenuItem onClick={handleMenuClose}>Login</MenuItem></Link>
-            <Link to='/register/'><MenuItem onClick={handleMenuClose}>Create New Account</MenuItem></Link>
+            <Link to='/login/' style={{ textDecoration: 'none' }}><MenuItem onClick={handleMenuClose}>Login</MenuItem></Link>
+            <Link to='/register/' style={{ textDecoration: 'none' }}><MenuItem onClick={handleMenuClose}>Create New Account</MenuItem></Link>
         </Menu>
     );
     const loggedInMenu = 
@@ -94,7 +95,7 @@ export default function AppBanner() {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="static" style={{ background: '#A8A8A8'}}>
                 <Toolbar>
                     <Typography                        
                         variant="h4"
@@ -102,7 +103,7 @@ export default function AppBanner() {
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}                        
                     >
-                        <Link style={{ textDecoration: 'none', color: 'white' }} to='/'>⌂</Link>
+                        <Link style={{textDecoration: 'none', color: 'red', fontFamily: "Pacifico", fontSize: '16pt'}} to='/'>Playlister</Link>
                     </Typography>
                     <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
